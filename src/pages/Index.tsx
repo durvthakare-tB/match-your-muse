@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { 
   MessageCircle, 
   Mic, 
@@ -23,48 +23,56 @@ const services = [
     title: "चॅटबॉट",
     description: "AI चॅटबॉट सह बोला",
     accentColor: "blue" as const,
+    path: "/chatbot",
   },
   {
     icon: Mic,
     title: "व्हॉइस सहाय्यक",
     description: "आवाज सहाय्यक",
     accentColor: "orange" as const,
+    path: "/voice",
   },
   {
     icon: FileText,
     title: "योजना",
     description: "सरकारी योजना शोधा",
     accentColor: "green" as const,
+    path: "/schemes",
   },
   {
     icon: Wrench,
     title: "स्थानिक सेवा",
     description: "स्थानिक सेवा प्रदाते",
     accentColor: "purple" as const,
+    path: "/services",
   },
   {
     icon: Scale,
     title: "कायदेशीर मदत",
     description: "कायदेशीर हक्क आणि मदत",
     accentColor: "teal" as const,
+    path: "/legal-help",
   },
   {
     icon: ClipboardList,
     title: "माझे अर्ज",
     description: "आपल्या अर्जाची स्थिती",
     accentColor: "indigo" as const,
+    path: "/applications",
   },
   {
     icon: AlertCircle,
     title: "आणीबाणी सेवा",
     description: "आणीबाणी सेवा",
     accentColor: "red" as const,
+    path: "/emergency",
   },
   {
     icon: User,
     title: "प्रोफाइल",
     description: "प्रोफाइल व्यवस्थापित करा",
     accentColor: "pink" as const,
+    path: "/profile",
   },
 ];
 
@@ -96,7 +104,19 @@ const popularSchemes = [
 ];
 
 const Index = () => {
-  const [activeTab, setActiveTab] = useState("dashboard");
+  const navigate = useNavigate();
+
+  const handleNavChange = (tabId: string) => {
+    const routes: Record<string, string> = {
+      dashboard: "/",
+      schemes: "/schemes",
+      legal: "/legal-help",
+      services: "/services",
+      emergency: "/emergency",
+      profile: "/profile",
+    };
+    navigate(routes[tabId] || "/");
+  };
 
   return (
     <div className="min-h-screen bg-background pb-20">
@@ -112,6 +132,7 @@ const Index = () => {
               title={service.title}
               description={service.description}
               accentColor={service.accentColor}
+              onClick={() => navigate(service.path)}
             />
           ))}
         </div>
@@ -133,6 +154,7 @@ const Index = () => {
                   title={scheme.title}
                   category={scheme.category}
                   iconColor={scheme.iconColor}
+                  onClick={() => navigate("/schemes")}
                 />
               ))}
             </div>
@@ -140,7 +162,7 @@ const Index = () => {
         </section>
       </main>
 
-      <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
+      <BottomNav activeTab="dashboard" onTabChange={handleNavChange} />
     </div>
   );
 };
