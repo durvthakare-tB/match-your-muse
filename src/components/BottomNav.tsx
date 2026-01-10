@@ -1,21 +1,22 @@
 import { Home, FileText, Scale, Wrench, AlertCircle, User } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface NavItem {
   icon: React.ElementType;
-  label: string;
+  labelKey: 'dashboard' | 'schemes' | 'legal' | 'services' | 'emergency' | 'profile';
   id: string;
   path: string;
 }
 
 const navItems: NavItem[] = [
-  { icon: Home, label: "डॅशबोर्ड", id: "dashboard", path: "/" },
-  { icon: FileText, label: "योजना", id: "schemes", path: "/schemes" },
-  { icon: Scale, label: "कायदेशीर मदत", id: "legal", path: "/legal-help" },
-  { icon: Wrench, label: "स्थानिक सेवा", id: "services", path: "/services" },
-  { icon: AlertCircle, label: "आणीबाणी", id: "emergency", path: "/emergency" },
-  { icon: User, label: "प्रोफाइल", id: "profile", path: "/profile" },
+  { icon: Home, labelKey: "dashboard", id: "dashboard", path: "/" },
+  { icon: FileText, labelKey: "schemes", id: "schemes", path: "/schemes" },
+  { icon: Scale, labelKey: "legal", id: "legal", path: "/legal-help" },
+  { icon: Wrench, labelKey: "services", id: "services", path: "/services" },
+  { icon: AlertCircle, labelKey: "emergency", id: "emergency", path: "/emergency" },
+  { icon: User, labelKey: "profile", id: "profile", path: "/profile" },
 ];
 
 interface BottomNavProps {
@@ -26,6 +27,7 @@ interface BottomNavProps {
 const BottomNav = ({ activeTab, onTabChange }: BottomNavProps) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useLanguage();
 
   const handleClick = (item: NavItem) => {
     if (onTabChange) {
@@ -58,7 +60,7 @@ const BottomNav = ({ activeTab, onTabChange }: BottomNavProps) => {
                 )}
               >
                 <item.icon className={cn("w-5 h-5", active && "stroke-[2.5px]")} />
-                <span className="text-[10px] font-medium truncate">{item.label}</span>
+                <span className="text-[10px] font-medium truncate">{t(item.labelKey)}</span>
               </button>
             );
           })}
