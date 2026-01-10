@@ -2,86 +2,88 @@ import { useState } from "react";
 import { Search, Filter, ChevronRight, Home, Heart, GraduationCap, Tractor } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import BottomNav from "@/components/BottomNav";
-
-const categories = [
-  { id: "all", label: "सर्व" },
-  { id: "agriculture", label: "शेती" },
-  { id: "health", label: "आरोग्य" },
-  { id: "education", label: "शिक्षण" },
-  { id: "housing", label: "घरकुल" },
-];
-
-const schemes = [
-  {
-    id: 1,
-    title: "PM-KISAN",
-    description: "शेतकऱ्यांना वार्षिक ₹6,000 थेट मदत",
-    category: "agriculture",
-    icon: Tractor,
-    iconColor: "text-service-blue",
-    bgColor: "bg-service-blue/10",
-  },
-  {
-    id: 2,
-    title: "MJPJAY",
-    description: "महात्मा ज्योतिबा फुले जन आरोग्य योजना",
-    category: "health",
-    icon: Heart,
-    iconColor: "text-service-red",
-    bgColor: "bg-service-red/10",
-  },
-  {
-    id: 3,
-    title: "सुकन्या समृद्धी योजना",
-    description: "मुलींच्या शिक्षणासाठी बचत योजना",
-    category: "education",
-    icon: GraduationCap,
-    iconColor: "text-service-purple",
-    bgColor: "bg-service-purple/10",
-  },
-  {
-    id: 4,
-    title: "PMAY-G",
-    description: "प्रधानमंत्री आवास योजना - ग्रामीण",
-    category: "housing",
-    icon: Home,
-    iconColor: "text-service-green",
-    bgColor: "bg-service-green/10",
-  },
-  {
-    id: 5,
-    title: "आयुष्मान भारत",
-    description: "₹5 लाख पर्यंत मोफत उपचार",
-    category: "health",
-    icon: Heart,
-    iconColor: "text-service-red",
-    bgColor: "bg-service-red/10",
-  },
-  {
-    id: 6,
-    title: "शेतकरी कर्जमाफी",
-    description: "महाराष्ट्र राज्य कर्जमाफी योजना",
-    category: "agriculture",
-    icon: Tractor,
-    iconColor: "text-service-blue",
-    bgColor: "bg-service-blue/10",
-  },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const SchemesPage = () => {
+  const { t } = useLanguage();
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
 
+  const categories = [
+    { id: "all", labelKey: "all" as const },
+    { id: "agriculture", labelKey: "agriculture" as const },
+    { id: "health", labelKey: "health" as const },
+    { id: "education", labelKey: "education" as const },
+    { id: "housing", labelKey: "housing" as const },
+  ];
+
+  const schemes = [
+    {
+      id: 1,
+      title: "PM-KISAN",
+      descriptionKey: "pmKisanDesc" as const,
+      category: "agriculture",
+      icon: Tractor,
+      iconColor: "text-service-blue",
+      bgColor: "bg-service-blue/10",
+    },
+    {
+      id: 2,
+      title: "MJPJAY",
+      descriptionKey: "mjpjayDesc" as const,
+      category: "health",
+      icon: Heart,
+      iconColor: "text-service-red",
+      bgColor: "bg-service-red/10",
+    },
+    {
+      id: 3,
+      title: "Sukanya Samriddhi",
+      descriptionKey: "sukanyaDesc" as const,
+      category: "education",
+      icon: GraduationCap,
+      iconColor: "text-service-purple",
+      bgColor: "bg-service-purple/10",
+    },
+    {
+      id: 4,
+      title: "PMAY-G",
+      descriptionKey: "pmayDesc" as const,
+      category: "housing",
+      icon: Home,
+      iconColor: "text-service-green",
+      bgColor: "bg-service-green/10",
+    },
+    {
+      id: 5,
+      title: "Ayushman Bharat",
+      descriptionKey: "ayushmanDesc" as const,
+      category: "health",
+      icon: Heart,
+      iconColor: "text-service-red",
+      bgColor: "bg-service-red/10",
+    },
+    {
+      id: 6,
+      title: "Farm Loan Waiver",
+      descriptionKey: "farmLoanDesc" as const,
+      category: "agriculture",
+      icon: Tractor,
+      iconColor: "text-service-blue",
+      bgColor: "bg-service-blue/10",
+    },
+  ];
+
   const filteredSchemes = schemes.filter((scheme) => {
     const matchesSearch = scheme.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          scheme.description.toLowerCase().includes(searchQuery.toLowerCase());
+                          t(scheme.descriptionKey).toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = activeCategory === "all" || scheme.category === activeCategory;
     return matchesSearch && matchesCategory;
   });
 
   return (
     <div className="min-h-screen bg-background pb-24">
-      <PageHeader title="सरकारी योजना" subtitle="तुमच्यासाठी उपलब्ध योजना शोधा" />
+      <PageHeader title={t('schemesTitle')} subtitle={t('schemesSubtitle')} />
       
       <main className="container mx-auto px-4 py-6">
         {/* Search Bar */}
@@ -91,7 +93,7 @@ const SchemesPage = () => {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="योजना शोधा..."
+            placeholder={t('searchSchemes')}
             className="w-full bg-card rounded-xl pl-12 pr-12 py-3 text-sm card-shadow focus:outline-none focus:ring-2 focus:ring-primary"
           />
           <button className="absolute right-4 top-1/2 -translate-y-1/2">
@@ -111,7 +113,7 @@ const SchemesPage = () => {
                   : "bg-card text-muted-foreground hover:bg-muted"
               }`}
             >
-              {category.label}
+              {t(category.labelKey)}
             </button>
           ))}
         </div>
@@ -128,7 +130,7 @@ const SchemesPage = () => {
               </div>
               <div className="flex-1 min-w-0">
                 <h3 className="font-semibold text-foreground">{scheme.title}</h3>
-                <p className="text-sm text-muted-foreground truncate">{scheme.description}</p>
+                <p className="text-sm text-muted-foreground truncate">{t(scheme.descriptionKey)}</p>
               </div>
               <ChevronRight className="w-5 h-5 text-muted-foreground flex-shrink-0" />
             </button>
@@ -137,7 +139,7 @@ const SchemesPage = () => {
 
         {filteredSchemes.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-muted-foreground">कोणतीही योजना सापडली नाही</p>
+            <p className="text-muted-foreground">{t('noSchemesFound')}</p>
           </div>
         )}
       </main>

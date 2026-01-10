@@ -80,7 +80,7 @@ const AuthPage = () => {
     } catch (error) {
       toast({
         title: t('error'),
-        description: 'Failed to send OTP',
+        description: t('failedToSendOtp'),
         variant: "destructive",
       });
     } finally {
@@ -232,14 +232,14 @@ const AuthPage = () => {
 
       toast({
         title: t('success'),
-        description: 'Registration successful!',
+        description: t('registrationSuccess'),
       });
 
       navigate('/');
     } catch (error) {
       toast({
         title: t('error'),
-        description: 'Registration failed',
+        description: t('registrationFailed'),
         variant: "destructive",
       });
     } finally {
@@ -266,7 +266,7 @@ const AuthPage = () => {
     } else {
       toast({
         title: t('error'),
-        description: result.error || 'Login failed',
+        description: result.error || t('loginFailed'),
         variant: "destructive",
       });
     }

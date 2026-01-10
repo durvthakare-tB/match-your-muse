@@ -1,52 +1,55 @@
 import { Scale, FileText, Phone, ChevronRight, Shield, Users } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import BottomNav from "@/components/BottomNav";
-
-const legalTopics = [
-  {
-    id: 1,
-    title: "कामगार हक्क",
-    description: "वेतन, कामाचे तास, सुट्ट्या आणि इतर हक्क",
-    icon: Users,
-    iconColor: "text-service-blue",
-    bgColor: "bg-service-blue/10",
-  },
-  {
-    id: 2,
-    title: "महिला सुरक्षा",
-    description: "कायदेशीर संरक्षण आणि तक्रार प्रक्रिया",
-    icon: Shield,
-    iconColor: "text-service-pink",
-    bgColor: "bg-service-pink/10",
-  },
-  {
-    id: 3,
-    title: "जमीन विवाद",
-    description: "मालमत्ता हक्क आणि कायदेशीर प्रक्रिया",
-    icon: FileText,
-    iconColor: "text-service-green",
-    bgColor: "bg-service-green/10",
-  },
-  {
-    id: 4,
-    title: "ग्राहक संरक्षण",
-    description: "ग्राहक हक्क आणि तक्रार निवारण",
-    icon: Scale,
-    iconColor: "text-service-purple",
-    bgColor: "bg-service-purple/10",
-  },
-];
-
-const helplines = [
-  { name: "महिला हेल्पलाइन", number: "181", available: "24/7" },
-  { name: "कायदेशीर सेवा प्राधिकरण", number: "15100", available: "24/7" },
-  { name: "ग्राहक तक्रार", number: "1800-11-4000", available: "सोम-शुक्र" },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const LegalHelpPage = () => {
+  const { t } = useLanguage();
+
+  const legalTopics = [
+    {
+      id: 1,
+      title: t('laborRights'),
+      description: t('laborRightsDesc'),
+      icon: Users,
+      iconColor: "text-service-blue",
+      bgColor: "bg-service-blue/10",
+    },
+    {
+      id: 2,
+      title: t('womenSafety'),
+      description: t('womenSafetyDesc'),
+      icon: Shield,
+      iconColor: "text-service-pink",
+      bgColor: "bg-service-pink/10",
+    },
+    {
+      id: 3,
+      title: t('landDispute'),
+      description: t('landDisputeDesc'),
+      icon: FileText,
+      iconColor: "text-service-green",
+      bgColor: "bg-service-green/10",
+    },
+    {
+      id: 4,
+      title: t('consumerProtection'),
+      description: t('consumerProtectionDesc'),
+      icon: Scale,
+      iconColor: "text-service-purple",
+      bgColor: "bg-service-purple/10",
+    },
+  ];
+
+  const helplines = [
+    { name: t('womenHelpline'), number: "181", available: "24/7" },
+    { name: t('legalServicesAuthority'), number: "15100", available: "24/7" },
+    { name: t('consumerComplaint'), number: "1800-11-4000", available: t('monFri') },
+  ];
+
   return (
     <div className="min-h-screen bg-background pb-24">
-      <PageHeader title="कायदेशीर मदत" subtitle="तुमचे हक्क जाणून घ्या" />
+      <PageHeader title={t('legalHelpTitle')} subtitle={t('legalHelpSubtitle')} />
       
       <main className="container mx-auto px-4 py-6">
         {/* Legal Topics */}
@@ -72,7 +75,7 @@ const LegalHelpPage = () => {
         <div className="bg-card rounded-xl p-5 card-shadow">
           <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
             <Phone className="w-5 h-5 text-primary" />
-            हेल्पलाइन नंबर
+            {t('helplineNumbers')}
           </h2>
           
           <div className="space-y-3">

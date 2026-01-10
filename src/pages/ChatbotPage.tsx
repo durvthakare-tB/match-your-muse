@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Send, Bot, User } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import BottomNav from "@/components/BottomNav";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Message {
   id: number;
@@ -10,10 +11,11 @@ interface Message {
 }
 
 const ChatbotPage = () => {
+  const { t } = useLanguage();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
-      text: "नमस्कार! मी तुमचा AI सहाय्यक आहे. मी तुम्हाला सरकारी योजना, सेवा आणि अर्ज प्रक्रियेबद्दल माहिती देऊ शकतो. तुम्हाला कशाबद्दल जाणून घ्यायचे आहे?",
+      text: t('chatbotWelcome'),
       isBot: true,
     },
   ]);
@@ -35,7 +37,7 @@ const ChatbotPage = () => {
     setTimeout(() => {
       const botResponse: Message = {
         id: messages.length + 2,
-        text: "धन्यवाद! मी तुमच्या प्रश्नावर काम करत आहे. कृपया थोडी प्रतीक्षा करा...",
+        text: t('chatbotThinking'),
         isBot: true,
       };
       setMessages((prev) => [...prev, botResponse]);
@@ -44,7 +46,7 @@ const ChatbotPage = () => {
 
   return (
     <div className="min-h-screen bg-background pb-24">
-      <PageHeader title="AI चॅटबॉट" subtitle="तुमच्या प्रश्नांची उत्तरे मिळवा" />
+      <PageHeader title={t('chatbotTitle')} subtitle={t('chatbotSubtitle')} />
       
       <main className="container mx-auto px-4 py-6">
         <div className="bg-card rounded-xl card-shadow overflow-hidden">
@@ -87,7 +89,7 @@ const ChatbotPage = () => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && handleSend()}
-                placeholder="तुमचा प्रश्न टाइप करा..."
+                placeholder={t('typeYourQuestion')}
                 className="flex-1 bg-muted rounded-full px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
               />
               <button
