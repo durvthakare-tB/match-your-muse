@@ -1,0 +1,93 @@
+import { useState } from "react";
+import { Mic, MicOff, Volume2 } from "lucide-react";
+import PageHeader from "@/components/PageHeader";
+import BottomNav from "@/components/BottomNav";
+
+const VoiceAssistantPage = () => {
+  const [isListening, setIsListening] = useState(false);
+  const [transcript, setTranscript] = useState("");
+
+  const toggleListening = () => {
+    setIsListening(!isListening);
+    if (!isListening) {
+      setTranscript("ऐकत आहे...");
+    } else {
+      setTranscript("");
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-background pb-24">
+      <PageHeader title="व्हॉइस सहाय्यक" subtitle="आवाजाने बोला, मदत मिळवा" />
+      
+      <main className="container mx-auto px-4 py-6">
+        <div className="bg-card rounded-xl card-shadow p-8 text-center">
+          {/* Voice Animation Area */}
+          <div className="relative w-48 h-48 mx-auto mb-8">
+            <div
+              className={`absolute inset-0 rounded-full bg-service-orange/20 ${
+                isListening ? "animate-pulse" : ""
+              }`}
+            />
+            <div
+              className={`absolute inset-4 rounded-full bg-service-orange/30 ${
+                isListening ? "animate-pulse delay-75" : ""
+              }`}
+            />
+            <button
+              onClick={toggleListening}
+              className={`absolute inset-8 rounded-full flex items-center justify-center transition-colors ${
+                isListening
+                  ? "bg-service-red text-white"
+                  : "bg-service-orange text-white"
+              }`}
+            >
+              {isListening ? (
+                <MicOff className="w-12 h-12" />
+              ) : (
+                <Mic className="w-12 h-12" />
+              )}
+            </button>
+          </div>
+
+          <p className="text-lg font-medium text-foreground mb-2">
+            {isListening ? "ऐकत आहे..." : "बोलण्यासाठी बटण दाबा"}
+          </p>
+          
+          {transcript && (
+            <div className="bg-muted rounded-lg p-4 mt-6 text-left">
+              <p className="text-sm text-muted-foreground mb-1">तुम्ही म्हणालात:</p>
+              <p className="text-foreground">{transcript}</p>
+            </div>
+          )}
+
+          {/* Quick Commands */}
+          <div className="mt-8">
+            <h3 className="text-sm font-medium text-muted-foreground mb-4">
+              उदाहरणार्थ बोला:
+            </h3>
+            <div className="flex flex-wrap justify-center gap-2">
+              {[
+                "PM-KISAN योजना काय आहे?",
+                "जवळचे रुग्णालय शोधा",
+                "माझ्या अर्जाची स्थिती",
+              ].map((command) => (
+                <div
+                  key={command}
+                  className="flex items-center gap-2 bg-muted px-3 py-2 rounded-full text-sm"
+                >
+                  <Volume2 className="w-4 h-4 text-muted-foreground" />
+                  <span>{command}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <BottomNav />
+    </div>
+  );
+};
+
+export default VoiceAssistantPage;
