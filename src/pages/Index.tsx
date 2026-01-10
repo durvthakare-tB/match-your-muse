@@ -16,95 +16,97 @@ import Header from "@/components/Header";
 import ServiceCard from "@/components/ServiceCard";
 import PopularSchemeCard from "@/components/PopularSchemeCard";
 import BottomNav from "@/components/BottomNav";
-
-const services = [
-  {
-    icon: MessageCircle,
-    title: "चॅटबॉट",
-    description: "AI चॅटबॉट सह बोला",
-    accentColor: "blue" as const,
-    path: "/chatbot",
-  },
-  {
-    icon: Mic,
-    title: "व्हॉइस सहाय्यक",
-    description: "आवाज सहाय्यक",
-    accentColor: "orange" as const,
-    path: "/voice",
-  },
-  {
-    icon: FileText,
-    title: "योजना",
-    description: "सरकारी योजना शोधा",
-    accentColor: "green" as const,
-    path: "/schemes",
-  },
-  {
-    icon: Wrench,
-    title: "स्थानिक सेवा",
-    description: "स्थानिक सेवा प्रदाते",
-    accentColor: "purple" as const,
-    path: "/services",
-  },
-  {
-    icon: Scale,
-    title: "कायदेशीर मदत",
-    description: "कायदेशीर हक्क आणि मदत",
-    accentColor: "teal" as const,
-    path: "/legal-help",
-  },
-  {
-    icon: ClipboardList,
-    title: "माझे अर्ज",
-    description: "आपल्या अर्जाची स्थिती",
-    accentColor: "indigo" as const,
-    path: "/applications",
-  },
-  {
-    icon: AlertCircle,
-    title: "आणीबाणी सेवा",
-    description: "आणीबाणी सेवा",
-    accentColor: "red" as const,
-    path: "/emergency",
-  },
-  {
-    icon: User,
-    title: "प्रोफाइल",
-    description: "प्रोफाइल व्यवस्थापित करा",
-    accentColor: "pink" as const,
-    path: "/profile",
-  },
-];
-
-const popularSchemes = [
-  {
-    icon: Home,
-    title: "PM-KISAN",
-    category: "शेतकरी",
-    iconColor: "text-service-blue",
-  },
-  {
-    icon: Heart,
-    title: "MJPJAY",
-    category: "आरोग्य",
-    iconColor: "text-service-red",
-  },
-  {
-    icon: GraduationCap,
-    title: "सुकन्या समृद्धी",
-    category: "शिक्षण",
-    iconColor: "text-service-purple",
-  },
-  {
-    icon: Home,
-    title: "PMAY-G",
-    category: "घरकुल",
-    iconColor: "text-service-green",
-  },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Index = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
+
+  const services = [
+    {
+      icon: MessageCircle,
+      title: t('chatbot'),
+      description: t('chatbotDesc'),
+      accentColor: "blue" as const,
+      path: "/chatbot",
+    },
+    {
+      icon: Mic,
+      title: t('voiceAssistant'),
+      description: t('voiceAssistantDesc'),
+      accentColor: "orange" as const,
+      path: "/voice",
+    },
+    {
+      icon: FileText,
+      title: t('schemes'),
+      description: t('schemesDesc'),
+      accentColor: "green" as const,
+      path: "/schemes",
+    },
+    {
+      icon: Wrench,
+      title: t('localServices'),
+      description: t('localServicesDesc'),
+      accentColor: "purple" as const,
+      path: "/services",
+    },
+    {
+      icon: Scale,
+      title: t('legalHelp'),
+      description: t('legalHelpDesc'),
+      accentColor: "teal" as const,
+      path: "/legal-help",
+    },
+    {
+      icon: ClipboardList,
+      title: t('myApplications'),
+      description: t('myApplicationsDesc'),
+      accentColor: "indigo" as const,
+      path: "/applications",
+    },
+    {
+      icon: AlertCircle,
+      title: t('emergency'),
+      description: t('emergencyDesc'),
+      accentColor: "red" as const,
+      path: "/emergency",
+    },
+    {
+      icon: User,
+      title: t('profile'),
+      description: t('profileDesc'),
+      accentColor: "pink" as const,
+      path: "/profile",
+    },
+  ];
+
+  const popularSchemes = [
+    {
+      icon: Home,
+      title: "PM-KISAN",
+      category: t('farmer'),
+      iconColor: "text-service-blue",
+    },
+    {
+      icon: Heart,
+      title: "MJPJAY",
+      category: t('health'),
+      iconColor: "text-service-red",
+    },
+    {
+      icon: GraduationCap,
+      title: "सुकन्या समृद्धी",
+      category: t('education'),
+      iconColor: "text-service-purple",
+    },
+    {
+      icon: Home,
+      title: "PMAY-G",
+      category: t('housing'),
+      iconColor: "text-service-green",
+    },
+  ];
 
   const handleNavChange = (tabId: string) => {
     const routes: Record<string, string> = {
@@ -127,7 +129,7 @@ const Index = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {services.map((service) => (
             <ServiceCard
-              key={service.title}
+              key={service.path}
               icon={service.icon}
               title={service.title}
               description={service.description}
@@ -143,13 +145,13 @@ const Index = () => {
             <div className="popular-gradient h-2 rounded-full mb-6" />
             
             <h2 className="text-lg font-semibold text-card-foreground mb-4">
-              लोकप्रिय योजना
+              {t('popularSchemes')}
             </h2>
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {popularSchemes.map((scheme) => (
+              {popularSchemes.map((scheme, index) => (
                 <PopularSchemeCard
-                  key={scheme.title}
+                  key={index}
                   icon={scheme.icon}
                   title={scheme.title}
                   category={scheme.category}

@@ -1,6 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface PageHeaderProps {
   title: string;
@@ -10,6 +11,7 @@ interface PageHeaderProps {
 
 const PageHeader = ({ title, subtitle, className }: PageHeaderProps) => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   return (
     <header className={cn("header-gradient px-4 py-6 text-primary-foreground", className)}>
@@ -19,7 +21,7 @@ const PageHeader = ({ title, subtitle, className }: PageHeaderProps) => {
           className="flex items-center gap-2 text-primary-foreground/80 hover:text-primary-foreground mb-4 transition-colors"
         >
           <ArrowLeft className="w-5 h-5" />
-          <span className="text-sm font-medium">मागे जा</span>
+          <span className="text-sm font-medium">{t('back')}</span>
         </button>
         <h1 className="text-2xl font-bold">{title}</h1>
         {subtitle && (

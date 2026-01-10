@@ -1,25 +1,43 @@
+import { useNavigate } from "react-router-dom";
 import { User, Phone, MapPin, FileText, Settings, LogOut, ChevronRight, Edit2 } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import BottomNav from "@/components/BottomNav";
-
-const profileData = {
-  name: "राजेश पाटील",
-  phone: "+91 98765 43210",
-  location: "पुणे, महाराष्ट्र",
-  aadhaar: "XXXX XXXX 4567",
-  email: "rajesh.patil@email.com",
-};
-
-const menuItems = [
-  { icon: FileText, label: "माझी कागदपत्रे", sublabel: "आधार, पॅन, इतर" },
-  { icon: MapPin, label: "पत्ता बदला", sublabel: "सध्याचा पत्ता अपडेट करा" },
-  { icon: Settings, label: "सेटिंग्स", sublabel: "भाषा, सूचना" },
-];
+import LanguageSelector from "@/components/LanguageSelector";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 
 const ProfilePage = () => {
+  const navigate = useNavigate();
+  const { t } = useLanguage();
+  const { user, logout } = useAuth();
+  const { toast } = useToast();
+
+  const profileData = {
+    name: user?.mobile_number ? `User ${user.mobile_number.slice(-4)}` : "User",
+    phone: user?.mobile_number || "+91 XXXXX XXXXX",
+    location: "Maharashtra",
+    aadhaar: "XXXX XXXX XXXX",
+    email: "-",
+  };
+
+  const menuItems = [
+    { icon: FileText, label: "Documents", sublabel: "Aadhaar, PAN, Others" },
+    { icon: MapPin, label: "Change Address", sublabel: "Update current address" },
+  ];
+
+  const handleLogout = async () => {
+    await logout();
+    toast({
+      title: t('success'),
+      description: 'Logged out successfully',
+    });
+    navigate('/auth');
+  };
+
   return (
     <div className="min-h-screen bg-background pb-24">
-      <PageHeader title="प्रोफाइल" subtitle="तुमची माहिती व्यवस्थापित करा" />
+      <PageHeader title={t('profile')} subtitle={t('profileDesc')} />
       
       <main className="container mx-auto px-4 py-6">
         {/* Profile Card */}
@@ -42,16 +60,31 @@ const ProfilePage = () => {
 
           <div className="space-y-3">
             <div className="flex items-center justify-between py-2 border-b border-border">
-              <span className="text-sm text-muted-foreground">स्थान</span>
+              <span className="text-sm text-muted-foreground">Location</span>
               <span className="text-sm font-medium text-foreground">{profileData.location}</span>
             </div>
             <div className="flex items-center justify-between py-2 border-b border-border">
-              <span className="text-sm text-muted-foreground">आधार</span>
+              <span className="text-sm text-muted-foreground">Aadhaar</span>
               <span className="text-sm font-medium text-foreground">{profileData.aadhaar}</span>
             </div>
             <div className="flex items-center justify-between py-2">
-              <span className="text-sm text-muted-foreground">ईमेल</span>
+              <span className="text-sm text-muted-foreground">Email</span>
               <span className="text-sm font-medium text-foreground">{profileData.email}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Language Selection */}
+        <div className="bg-card rounded-xl p-4 card-shadow mb-6">
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center">
+              <Settings className="w-5 h-5 text-muted-foreground" />
+            </div>
+            <div className="flex-1">
+              <p className="font-medium text-foreground">{t('selectLanguage')}</p>
+            </div>
+            <div className="w-32">
+              <LanguageSelector variant="standalone" />
             </div>
           </div>
         </div>
@@ -78,9 +111,12 @@ const ProfilePage = () => {
         </div>
 
         {/* Logout Button */}
-        <button className="w-full flex items-center justify-center gap-2 bg-service-red/10 text-service-red rounded-xl py-4 font-medium hover:bg-service-red/20 transition-colors">
+        <button 
+          onClick={handleLogout}
+          className="w-full flex items-center justify-center gap-2 bg-service-red/10 text-service-red rounded-xl py-4 font-medium hover:bg-service-red/20 transition-colors"
+        >
           <LogOut className="w-5 h-5" />
-          <span>लॉग आउट</span>
+          <span>{t('logout')}</span>
         </button>
       </main>
 

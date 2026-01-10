@@ -1,0 +1,100 @@
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+
+interface User {
+  id: string;
+  mobile_number: string;
+  preferred_language: string;
+}
+
+interface AuthContextType {
+  user: User | null;
+  isLoading: boolean;
+  isAuthenticated: boolean;
+  login: (mobileNumber: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  logout: () => Promise<void>;
+  setUser: (user: User | null) => void;
+}
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Check for existing session
+    const checkSession = async () => {
+      const savedUser = localStorage.getItem('auth_user');
+      if (savedUser) {
+        try {
+          setUser(JSON.parse(savedUser));
+        } catch {
+          localStorage.removeItem('auth_user');
+        }
+      }
+      setIsLoading(false);
+    };
+
+    checkSession();
+  }, []);
+
+  const login = async (mobileNumber: string, password: string): Promise<{ success: boolean; error?: string }> => {
+    try {
+      const { data: profile, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('mobile_number', mobileNumber)
+        .single();
+
+      if (error || !profile) {
+        return { success: false, error: 'User not found' };
+      }
+
+      // Simple password check (in production, use proper hashing)
+      if (profile.password_hash !== password) {
+        return { success: false, error: 'Invalid password' };
+      }
+
+      const userData: User = {
+        id: profile.id,
+        mobile_number: profile.mobile_number,
+        preferred_language: profile.preferred_language,
+      };
+
+      setUser(userData);
+      localStorage.setItem('auth_user', JSON.stringify(userData));
+      return { success: true };
+    } catch (error) {
+      return { success: false, error: 'Login failed' };
+    }
+  };
+
+  const logout = async () => {
+    setUser(null);
+    localStorage.removeItem('auth_user');
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        isLoading,
+        isAuthenticated: !!user,
+        login,
+        logout,
+        setUser,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
