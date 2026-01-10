@@ -81,6 +81,20 @@ export type Database = {
     Functions: {
       check_mobile_exists: { Args: { mobile: string }; Returns: boolean }
       check_username_exists: { Args: { uname: string }; Returns: boolean }
+      create_profile_with_otp: {
+        Args: {
+          p_mobile_number: string
+          p_password_hash: string
+          p_preferred_language?: string
+          p_username: string
+        }
+        Returns: {
+          id: string
+          mobile_number: string
+          preferred_language: string
+          username: string
+        }[]
+      }
       get_profile_by_mobile: {
         Args: { mobile: string }
         Returns: {
