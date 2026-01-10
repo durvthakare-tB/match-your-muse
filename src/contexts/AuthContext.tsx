@@ -5,6 +5,7 @@ interface User {
   id: string;
   mobile_number: string;
   preferred_language: string;
+  username?: string;
 }
 
 interface AuthContextType {
@@ -60,6 +61,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         id: profile.id,
         mobile_number: profile.mobile_number,
         preferred_language: profile.preferred_language,
+        username: profile.username ?? undefined,
       };
 
       setUser(userData);
