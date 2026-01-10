@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Phone, Lock, ArrowRight, KeyRound } from "lucide-react";
+import { Phone, Lock, ArrowRight, KeyRound, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,6 +21,7 @@ const AuthPage = () => {
 
   const [step, setStep] = useState<AuthStep>('mobile');
   const [mobileNumber, setMobileNumber] = useState('');
+  const [username, setUsername] = useState('');
   const [otp, setOtp] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -36,6 +37,10 @@ const AuthPage = () => {
 
   const validateMobile = (mobile: string): boolean => {
     return /^[0-9]{10}$/.test(mobile);
+  };
+
+  const validateUsername = (name: string): boolean => {
+    return name.trim().length >= 3;
   };
 
   const handleSendOtp = async () => {
@@ -145,11 +150,13 @@ const AuthPage = () => {
             id: profile.id,
             mobile_number: profile.mobile_number,
             preferred_language: profile.preferred_language,
+            username: profile.username,
           });
           localStorage.setItem('auth_user', JSON.stringify({
             id: profile.id,
             mobile_number: profile.mobile_number,
             preferred_language: profile.preferred_language,
+            username: profile.username,
           }));
           navigate('/');
         }
@@ -169,6 +176,15 @@ const AuthPage = () => {
   };
 
   const handleSetPassword = async () => {
+    if (!validateUsername(username)) {
+      toast({
+        title: t('error'),
+        description: t('usernameMinLength'),
+        variant: "destructive",
+      });
+      return;
+    }
+
     if (password.length < 6) {
       toast({
         title: t('error'),
@@ -206,11 +222,28 @@ const AuthPage = () => {
         return;
       }
 
+      // Check if username already exists
+      const { data: existingUsername } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('username', username.trim())
+        .single();
+
+      if (existingUsername) {
+        toast({
+          title: t('error'),
+          description: t('usernameExists'),
+          variant: "destructive",
+        });
+        return;
+      }
+
       // Create new user profile
       const { data: newProfile, error } = await supabase
         .from('profiles')
         .insert({
           mobile_number: mobileNumber,
+          username: username.trim(),
           password_hash: password, // In production, hash this properly
           preferred_language: localStorage.getItem('preferred_language') || 'mr',
         })
@@ -223,11 +256,13 @@ const AuthPage = () => {
         id: newProfile.id,
         mobile_number: newProfile.mobile_number,
         preferred_language: newProfile.preferred_language,
+        username: newProfile.username,
       });
       localStorage.setItem('auth_user', JSON.stringify({
         id: newProfile.id,
         mobile_number: newProfile.mobile_number,
         preferred_language: newProfile.preferred_language,
+        username: newProfile.username,
       }));
 
       toast({
@@ -272,30 +307,22 @@ const AuthPage = () => {
     }
   };
 
-  const handleExistingUserChoice = (method: 'password' | 'otp') => {
-    if (method === 'password') {
-      setStep('login');
-    } else {
-      handleSendOtp();
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/10 via-background to-primary/5 flex items-center justify-center p-4">
+    <div className="min-h-screen min-h-[100dvh] bg-gradient-to-br from-primary/10 via-background to-primary/5 flex items-center justify-center p-4 sm:p-6 md:p-8">
       <Card className="w-full max-w-md card-shadow">
         <CardHeader className="text-center pb-2">
-          <div className="header-gradient w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Phone className="w-8 h-8 text-primary-foreground" />
+          <div className="header-gradient w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Phone className="w-7 h-7 sm:w-8 sm:h-8 text-primary-foreground" />
           </div>
-          <CardTitle className="text-2xl font-bold">
+          <CardTitle className="text-xl sm:text-2xl font-bold">
             {step === 'set-password' ? t('register') : t('login')}
           </CardTitle>
         </CardHeader>
 
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-5 sm:space-y-6">
           {/* Language Selector */}
           <div className="space-y-2">
-            <Label>{t('selectLanguage')}</Label>
+            <Label className="text-sm sm:text-base">{t('selectLanguage')}</Label>
             <LanguageSelector variant="standalone" />
           </div>
 
@@ -303,22 +330,23 @@ const AuthPage = () => {
           {step === 'mobile' && (
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="mobile">{t('mobileNumber')}</Label>
+                <Label htmlFor="mobile" className="text-sm sm:text-base">{t('mobileNumber')}</Label>
                 <div className="relative">
                   <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
                     id="mobile"
                     type="tel"
+                    inputMode="numeric"
                     placeholder={t('enterMobileNumber')}
                     value={mobileNumber}
                     onChange={(e) => setMobileNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                    className="pl-10"
+                    className="pl-10 h-11 sm:h-12 text-base"
                     maxLength={10}
                   />
                 </div>
               </div>
               <Button
-                className="w-full"
+                className="w-full h-11 sm:h-12 text-base"
                 onClick={handleSendOtp}
                 disabled={isLoading || mobileNumber.length !== 10}
               >
@@ -332,16 +360,17 @@ const AuthPage = () => {
           {step === 'otp' && (
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="otp">{t('enterOtp')}</Label>
+                <Label htmlFor="otp" className="text-sm sm:text-base">{t('enterOtp')}</Label>
                 <div className="relative">
                   <KeyRound className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
                     id="otp"
                     type="text"
+                    inputMode="numeric"
                     placeholder="000000"
                     value={otp}
                     onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                    className="pl-10 text-center text-lg tracking-widest"
+                    className="pl-10 text-center text-lg tracking-widest h-11 sm:h-12"
                     maxLength={6}
                   />
                 </div>
@@ -351,7 +380,7 @@ const AuthPage = () => {
                 <div className="flex gap-2">
                   <Button
                     variant="outline"
-                    className="flex-1"
+                    className="flex-1 h-11 sm:h-12"
                     onClick={() => setStep('login')}
                   >
                     {t('loginWithPassword')}
@@ -360,7 +389,7 @@ const AuthPage = () => {
               )}
 
               <Button
-                className="w-full"
+                className="w-full h-11 sm:h-12 text-base"
                 onClick={handleVerifyOtp}
                 disabled={isLoading || otp.length !== 6}
               >
@@ -370,7 +399,7 @@ const AuthPage = () => {
 
               <Button
                 variant="ghost"
-                className="w-full"
+                className="w-full h-11 sm:h-12"
                 onClick={() => {
                   setStep('mobile');
                   setOtp('');
@@ -385,7 +414,21 @@ const AuthPage = () => {
           {step === 'set-password' && (
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="password">{t('password')}</Label>
+                <Label htmlFor="username" className="text-sm sm:text-base">{t('username')}</Label>
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Input
+                    id="username"
+                    type="text"
+                    placeholder={t('enterUsername')}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="pl-10 h-11 sm:h-12 text-base"
+                  />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="password" className="text-sm sm:text-base">{t('password')}</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
@@ -394,12 +437,12 @@ const AuthPage = () => {
                     placeholder={t('enterPassword')}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10"
+                    className="pl-10 h-11 sm:h-12 text-base"
                   />
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword">{t('confirmPassword')}</Label>
+                <Label htmlFor="confirmPassword" className="text-sm sm:text-base">{t('confirmPassword')}</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
@@ -408,12 +451,12 @@ const AuthPage = () => {
                     placeholder={t('confirmPassword')}
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="pl-10"
+                    className="pl-10 h-11 sm:h-12 text-base"
                   />
                 </div>
               </div>
               <Button
-                className="w-full"
+                className="w-full h-11 sm:h-12 text-base"
                 onClick={handleSetPassword}
                 disabled={isLoading}
               >
@@ -430,7 +473,7 @@ const AuthPage = () => {
                 {t('mobileNumber')}: {mobileNumber}
               </p>
               <div className="space-y-2">
-                <Label htmlFor="loginPassword">{t('password')}</Label>
+                <Label htmlFor="loginPassword" className="text-sm sm:text-base">{t('password')}</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
@@ -439,12 +482,12 @@ const AuthPage = () => {
                     placeholder={t('enterPassword')}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10"
+                    className="pl-10 h-11 sm:h-12 text-base"
                   />
                 </div>
               </div>
               <Button
-                className="w-full"
+                className="w-full h-11 sm:h-12 text-base"
                 onClick={handlePasswordLogin}
                 disabled={isLoading}
               >
@@ -453,7 +496,7 @@ const AuthPage = () => {
               </Button>
               <Button
                 variant="outline"
-                className="w-full"
+                className="w-full h-11 sm:h-12"
                 onClick={() => {
                   setStep('mobile');
                   setPassword('');

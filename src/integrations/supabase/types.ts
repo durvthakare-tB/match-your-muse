@@ -50,6 +50,7 @@ export type Database = {
           preferred_language: string
           updated_at: string
           user_id: string | null
+          username: string | null
         }
         Insert: {
           created_at?: string
@@ -59,6 +60,7 @@ export type Database = {
           preferred_language?: string
           updated_at?: string
           user_id?: string | null
+          username?: string | null
         }
         Update: {
           created_at?: string
@@ -68,6 +70,7 @@ export type Database = {
           preferred_language?: string
           updated_at?: string
           user_id?: string | null
+          username?: string | null
         }
         Relationships: []
       }

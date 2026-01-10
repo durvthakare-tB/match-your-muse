@@ -11,6 +11,8 @@ export const translations = {
     register: 'Register',
     mobileNumber: 'Mobile Number',
     enterMobileNumber: 'Enter your mobile number',
+    username: 'Username',
+    enterUsername: 'Enter your username',
     password: 'Password',
     enterPassword: 'Enter your password',
     confirmPassword: 'Confirm Password',
@@ -22,6 +24,7 @@ export const translations = {
     otpVerified: 'OTP verified successfully',
     invalidOtp: 'Invalid OTP',
     mobileExists: 'This mobile number already exists',
+    usernameExists: 'This username already exists',
     loginWithPassword: 'Login with Password',
     loginWithOtp: 'Login with OTP',
     newUser: 'New User?',
@@ -31,6 +34,8 @@ export const translations = {
     registrationFailed: 'Registration failed',
     loginFailed: 'Login failed',
     failedToSendOtp: 'Failed to send OTP',
+    usernameRequired: 'Username is required',
+    usernameMinLength: 'Username must be at least 3 characters',
     
     // Services
     chatbot: 'Chatbot',
@@ -182,6 +187,8 @@ export const translations = {
     register: 'नोंदणी',
     mobileNumber: 'मोबाइल नंबर',
     enterMobileNumber: 'तुमचा मोबाइल नंबर टाका',
+    username: 'वापरकर्तानाव',
+    enterUsername: 'तुमचे वापरकर्तानाव टाका',
     password: 'पासवर्ड',
     enterPassword: 'तुमचा पासवर्ड टाका',
     confirmPassword: 'पासवर्ड पुष्टी करा',
@@ -193,6 +200,7 @@ export const translations = {
     otpVerified: 'OTP यशस्वीरित्या पडताळला',
     invalidOtp: 'अवैध OTP',
     mobileExists: 'हा मोबाइल नंबर आधीच अस्तित्वात आहे',
+    usernameExists: 'हे वापरकर्तानाव आधीच अस्तित्वात आहे',
     loginWithPassword: 'पासवर्डने लॉगिन',
     loginWithOtp: 'OTP ने लॉगिन',
     newUser: 'नवीन वापरकर्ता?',
@@ -202,6 +210,8 @@ export const translations = {
     registrationFailed: 'नोंदणी अयशस्वी',
     loginFailed: 'लॉगिन अयशस्वी',
     failedToSendOtp: 'OTP पाठवण्यात अयशस्वी',
+    usernameRequired: 'वापरकर्तानाव आवश्यक आहे',
+    usernameMinLength: 'वापरकर्तानाव किमान 3 अक्षरांचे असावे',
     
     // Services
     chatbot: 'चॅटबॉट',
@@ -353,6 +363,8 @@ export const translations = {
     register: 'पंजीकरण',
     mobileNumber: 'मोबाइल नंबर',
     enterMobileNumber: 'अपना मोबाइल नंबर दर्ज करें',
+    username: 'उपयोगकर्ता नाम',
+    enterUsername: 'अपना उपयोगकर्ता नाम दर्ज करें',
     password: 'पासवर्ड',
     enterPassword: 'अपना पासवर्ड दर्ज करें',
     confirmPassword: 'पासवर्ड की पुष्टि करें',
@@ -364,6 +376,7 @@ export const translations = {
     otpVerified: 'OTP सफलतापूर्वक सत्यापित',
     invalidOtp: 'अमान्य OTP',
     mobileExists: 'यह मोबाइल नंबर पहले से मौजूद है',
+    usernameExists: 'यह उपयोगकर्ता नाम पहले से मौजूद है',
     loginWithPassword: 'पासवर्ड से लॉगिन',
     loginWithOtp: 'OTP से लॉगिन',
     newUser: 'नया उपयोगकर्ता?',
@@ -373,6 +386,8 @@ export const translations = {
     registrationFailed: 'पंजीकरण विफल',
     loginFailed: 'लॉगिन विफल',
     failedToSendOtp: 'OTP भेजने में विफल',
+    usernameRequired: 'उपयोगकर्ता नाम आवश्यक है',
+    usernameMinLength: 'उपयोगकर्ता नाम कम से कम 3 अक्षर का होना चाहिए',
     
     // Services
     chatbot: 'चैटबॉट',
