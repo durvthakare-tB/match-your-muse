@@ -81,6 +81,7 @@ export type Database = {
     Functions: {
       check_mobile_exists: { Args: { mobile: string }; Returns: boolean }
       check_username_exists: { Args: { uname: string }; Returns: boolean }
+      create_otp: { Args: { p_mobile_number: string }; Returns: string }
       create_profile_with_otp: {
         Args: {
           p_mobile_number: string
@@ -112,6 +113,10 @@ export type Database = {
           preferred_language: string
           username: string
         }[]
+      }
+      verify_otp: {
+        Args: { p_mobile_number: string; p_otp_code: string }
+        Returns: boolean
       }
     }
     Enums: {
