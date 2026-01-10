@@ -42,21 +42,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (mobileNumber: string, password: string): Promise<{ success: boolean; error?: string }> => {
     try {
-      const { data: profile, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('mobile_number', mobileNumber)
-        .single();
+      // Use secure RPC function for login
+      const { data: profiles, error } = await supabase.rpc('get_profile_for_login', {
+        mobile: mobileNumber,
+        pwd: password
+      });
 
-      if (error || !profile) {
-        return { success: false, error: 'User not found' };
+      if (error) {
+        return { success: false, error: 'Login failed' };
       }
 
-      // Simple password check (in production, use proper hashing)
-      if (profile.password_hash !== password) {
-        return { success: false, error: 'Invalid password' };
+      if (!profiles || profiles.length === 0) {
+        return { success: false, error: 'Invalid credentials' };
       }
 
+      const profile = profiles[0];
       const userData: User = {
         id: profile.id,
         mobile_number: profile.mobile_number,

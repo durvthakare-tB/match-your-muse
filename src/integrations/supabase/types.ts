@@ -79,7 +79,26 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      check_mobile_exists: { Args: { mobile: string }; Returns: boolean }
+      check_username_exists: { Args: { uname: string }; Returns: boolean }
+      get_profile_by_mobile: {
+        Args: { mobile: string }
+        Returns: {
+          id: string
+          mobile_number: string
+          preferred_language: string
+          username: string
+        }[]
+      }
+      get_profile_for_login: {
+        Args: { mobile: string; pwd: string }
+        Returns: {
+          id: string
+          mobile_number: string
+          preferred_language: string
+          username: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

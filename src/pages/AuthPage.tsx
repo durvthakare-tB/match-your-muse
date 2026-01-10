@@ -27,7 +27,6 @@ const AuthPage = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isExistingUser, setIsExistingUser] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [generatedOtp, setGeneratedOtp] = useState('');
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -55,18 +54,15 @@ const AuthPage = () => {
 
     setIsLoading(true);
     try {
-      // Check if user exists
-      const { data: existingUser } = await supabase
-        .from('profiles')
-        .select('id, password_hash')
-        .eq('mobile_number', mobileNumber)
-        .single();
+      // Check if user exists using secure RPC function
+      const { data: exists } = await supabase.rpc('check_mobile_exists', { 
+        mobile: mobileNumber 
+      });
 
-      setIsExistingUser(!!existingUser);
+      setIsExistingUser(!!exists);
 
       // Generate OTP (in production, use SMS service)
       const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
-      setGeneratedOtp(otpCode);
 
       // Store OTP in database
       const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes
@@ -115,7 +111,7 @@ const AuthPage = () => {
         .gte('expires_at', new Date().toISOString())
         .order('created_at', { ascending: false })
         .limit(1)
-        .single();
+        .maybeSingle();
 
       if (!otpRecord) {
         toast({
@@ -123,6 +119,7 @@ const AuthPage = () => {
           description: t('invalidOtp'),
           variant: "destructive",
         });
+        setIsLoading(false);
         return;
       }
 
@@ -138,19 +135,18 @@ const AuthPage = () => {
       });
 
       if (isExistingUser) {
-        // For existing user with OTP login, log them in
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('mobile_number', mobileNumber)
-          .single();
+        // For existing user with OTP login, use secure RPC function
+        const { data: profiles } = await supabase.rpc('get_profile_by_mobile', {
+          mobile: mobileNumber
+        });
 
-        if (profile) {
+        if (profiles && profiles.length > 0) {
+          const profile = profiles[0];
           setUser({
             id: profile.id,
             mobile_number: profile.mobile_number,
             preferred_language: profile.preferred_language,
-            username: profile.username,
+            username: profile.username ?? undefined,
           });
           localStorage.setItem('auth_user', JSON.stringify({
             id: profile.id,
@@ -205,36 +201,34 @@ const AuthPage = () => {
 
     setIsLoading(true);
     try {
-      // Check again if user exists (race condition prevention)
-      const { data: existingUser } = await supabase
-        .from('profiles')
-        .select('id')
-        .eq('mobile_number', mobileNumber)
-        .single();
+      // Check if user exists using secure RPC function
+      const { data: mobileExists } = await supabase.rpc('check_mobile_exists', { 
+        mobile: mobileNumber 
+      });
 
-      if (existingUser) {
+      if (mobileExists) {
         toast({
           title: t('error'),
           description: t('mobileExists'),
           variant: "destructive",
         });
         setStep('mobile');
+        setIsLoading(false);
         return;
       }
 
-      // Check if username already exists
-      const { data: existingUsername } = await supabase
-        .from('profiles')
-        .select('id')
-        .eq('username', username.trim())
-        .single();
+      // Check if username already exists using secure RPC function
+      const { data: usernameExists } = await supabase.rpc('check_username_exists', { 
+        uname: username.trim() 
+      });
 
-      if (existingUsername) {
+      if (usernameExists) {
         toast({
           title: t('error'),
           description: t('usernameExists'),
           variant: "destructive",
         });
+        setIsLoading(false);
         return;
       }
 
@@ -256,7 +250,7 @@ const AuthPage = () => {
         id: newProfile.id,
         mobile_number: newProfile.mobile_number,
         preferred_language: newProfile.preferred_language,
-        username: newProfile.username,
+        username: newProfile.username ?? undefined,
       });
       localStorage.setItem('auth_user', JSON.stringify({
         id: newProfile.id,
