@@ -27,6 +27,10 @@ export const translations = {
     newUser: 'New User?',
     existingUser: 'Already have an account?',
     logout: 'Logout',
+    registrationSuccess: 'Registration successful!',
+    registrationFailed: 'Registration failed',
+    loginFailed: 'Login failed',
+    failedToSendOtp: 'Failed to send OTP',
     
     // Services
     chatbot: 'Chatbot',
@@ -66,11 +70,107 @@ export const translations = {
     loading: 'Loading...',
     error: 'Error',
     success: 'Success',
+    all: 'All',
+    call: 'Call',
+    tap: 'Tap',
+    available: 'Available',
+    busy: 'Busy',
     
     // Validation
     invalidMobile: 'Please enter a valid 10-digit mobile number',
     passwordMinLength: 'Password must be at least 6 characters',
     passwordMismatch: 'Passwords do not match',
+    
+    // Chatbot Page
+    chatbotTitle: 'AI Chatbot',
+    chatbotSubtitle: 'Get answers to your questions',
+    chatbotWelcome: 'Hello! I am your AI assistant. I can provide information about government schemes, services, and application processes. What would you like to know?',
+    chatbotThinking: 'Thank you! I am working on your question. Please wait...',
+    typeYourQuestion: 'Type your question...',
+    
+    // Voice Assistant Page
+    voiceAssistantTitle: 'Voice Assistant',
+    voiceAssistantSubtitle: 'Speak and get help',
+    listening: 'Listening...',
+    pressToSpeak: 'Press button to speak',
+    youSaid: 'You said:',
+    exampleCommands: 'Example commands:',
+    whatIsPmKisan: 'What is PM-KISAN scheme?',
+    findNearbyHospital: 'Find nearby hospital',
+    myApplicationStatus: 'My application status',
+    
+    // Emergency Page
+    emergencyTitle: 'Emergency Services',
+    emergencySubtitle: 'Call for immediate help',
+    inEmergency: 'In case of emergency',
+    stayCalm: 'Stay calm and call the appropriate number',
+    police: 'Police',
+    policeDesc: 'Crime, theft, accidents',
+    ambulance: 'Ambulance',
+    ambulanceDesc: 'Medical emergency',
+    fire: 'Fire Department',
+    fireDesc: 'Fire, rescue operations',
+    womenHelpline: 'Women Helpline',
+    womenHelplineDesc: 'Women safety',
+    disasterManagement: 'Disaster Management',
+    disasterManagementDesc: 'Natural disasters',
+    shareLocation: 'Share your location when calling so help can reach you quickly',
+    
+    // Legal Help Page
+    legalHelpTitle: 'Legal Help',
+    legalHelpSubtitle: 'Know your rights',
+    laborRights: 'Labor Rights',
+    laborRightsDesc: 'Wages, working hours, leave and other rights',
+    womenSafety: 'Women Safety',
+    womenSafetyDesc: 'Legal protection and complaint process',
+    landDispute: 'Land Dispute',
+    landDisputeDesc: 'Property rights and legal process',
+    consumerProtection: 'Consumer Protection',
+    consumerProtectionDesc: 'Consumer rights and grievance redressal',
+    helplineNumbers: 'Helpline Numbers',
+    legalServicesAuthority: 'Legal Services Authority',
+    consumerComplaint: 'Consumer Complaint',
+    monFri: 'Mon-Fri',
+    
+    // Local Services Page
+    localServicesTitle: 'Local Services',
+    localServicesSubtitle: 'Service providers near you',
+    electrician: 'Electrician',
+    plumber: 'Plumber',
+    carpenter: 'Carpenter',
+    painter: 'Painter',
+    acRepair: 'AC Repair',
+    km: 'km',
+    
+    // Applications Page
+    applicationsTitle: 'My Applications',
+    applicationsSubtitle: 'View application status',
+    total: 'Total',
+    approved: 'Approved',
+    processing: 'Processing',
+    rejected: 'Rejected',
+    pending: 'Pending',
+    approvedMsg: 'Application approved. Next installment will be credited soon.',
+    processingMsg: 'Document verification in progress.',
+    pendingMsg: 'Application received. Review pending.',
+    rejectedMsg: 'Eligibility criteria not met. Please apply again.',
+    
+    // Schemes Page
+    schemesTitle: 'Government Schemes',
+    schemesSubtitle: 'Find schemes available for you',
+    searchSchemes: 'Search schemes...',
+    noSchemesFound: 'No schemes found',
+    agriculture: 'Agriculture',
+    pmKisanDesc: '₹6,000 annual assistance to farmers',
+    mjpjayDesc: 'Mahatma Jyotiba Phule Jan Arogya Yojana',
+    sukanyaDesc: 'Savings scheme for girls education',
+    pmayDesc: 'Pradhan Mantri Awas Yojana - Rural',
+    ayushmanDesc: 'Free treatment up to ₹5 lakhs',
+    farmLoanDesc: 'Maharashtra State Loan Waiver Scheme',
+    
+    // Profile Page
+    languagePreference: 'Language Preference',
+    accountSettings: 'Account Settings',
   },
   mr: {
     // Header
@@ -98,6 +198,10 @@ export const translations = {
     newUser: 'नवीन वापरकर्ता?',
     existingUser: 'आधीच खाते आहे?',
     logout: 'लॉगआउट',
+    registrationSuccess: 'नोंदणी यशस्वी!',
+    registrationFailed: 'नोंदणी अयशस्वी',
+    loginFailed: 'लॉगिन अयशस्वी',
+    failedToSendOtp: 'OTP पाठवण्यात अयशस्वी',
     
     // Services
     chatbot: 'चॅटबॉट',
@@ -137,11 +241,107 @@ export const translations = {
     loading: 'लोड होत आहे...',
     error: 'त्रुटी',
     success: 'यशस्वी',
+    all: 'सर्व',
+    call: 'कॉल करा',
+    tap: 'टॅप करा',
+    available: 'उपलब्ध',
+    busy: 'व्यस्त',
     
     // Validation
     invalidMobile: 'कृपया वैध 10 अंकी मोबाइल नंबर टाका',
     passwordMinLength: 'पासवर्ड किमान 6 अक्षरांचा असावा',
     passwordMismatch: 'पासवर्ड जुळत नाहीत',
+    
+    // Chatbot Page
+    chatbotTitle: 'AI चॅटबॉट',
+    chatbotSubtitle: 'तुमच्या प्रश्नांची उत्तरे मिळवा',
+    chatbotWelcome: 'नमस्कार! मी तुमचा AI सहाय्यक आहे. मी तुम्हाला सरकारी योजना, सेवा आणि अर्ज प्रक्रियेबद्दल माहिती देऊ शकतो. तुम्हाला कशाबद्दल जाणून घ्यायचे आहे?',
+    chatbotThinking: 'धन्यवाद! मी तुमच्या प्रश्नावर काम करत आहे. कृपया थोडी प्रतीक्षा करा...',
+    typeYourQuestion: 'तुमचा प्रश्न टाइप करा...',
+    
+    // Voice Assistant Page
+    voiceAssistantTitle: 'व्हॉइस सहाय्यक',
+    voiceAssistantSubtitle: 'आवाजाने बोला, मदत मिळवा',
+    listening: 'ऐकत आहे...',
+    pressToSpeak: 'बोलण्यासाठी बटण दाबा',
+    youSaid: 'तुम्ही म्हणालात:',
+    exampleCommands: 'उदाहरणार्थ बोला:',
+    whatIsPmKisan: 'PM-KISAN योजना काय आहे?',
+    findNearbyHospital: 'जवळचे रुग्णालय शोधा',
+    myApplicationStatus: 'माझ्या अर्जाची स्थिती',
+    
+    // Emergency Page
+    emergencyTitle: 'आणीबाणी सेवा',
+    emergencySubtitle: 'तात्काळ मदतीसाठी कॉल करा',
+    inEmergency: 'आणीबाणीच्या परिस्थितीत',
+    stayCalm: 'शांत राहा आणि योग्य नंबरवर कॉल करा',
+    police: 'पोलीस',
+    policeDesc: 'गुन्हे, चोरी, अपघात',
+    ambulance: 'रुग्णवाहिका',
+    ambulanceDesc: 'वैद्यकीय आणीबाणी',
+    fire: 'अग्निशमन',
+    fireDesc: 'आग, बचाव कार्य',
+    womenHelpline: 'महिला हेल्पलाइन',
+    womenHelplineDesc: 'महिला सुरक्षा',
+    disasterManagement: 'आपत्ती व्यवस्थापन',
+    disasterManagementDesc: 'नैसर्गिक आपत्ती',
+    shareLocation: 'कॉल करताना आपले स्थान सांगा जेणेकरून मदत लवकर पोहोचू शकेल',
+    
+    // Legal Help Page
+    legalHelpTitle: 'कायदेशीर मदत',
+    legalHelpSubtitle: 'तुमचे हक्क जाणून घ्या',
+    laborRights: 'कामगार हक्क',
+    laborRightsDesc: 'वेतन, कामाचे तास, सुट्ट्या आणि इतर हक्क',
+    womenSafety: 'महिला सुरक्षा',
+    womenSafetyDesc: 'कायदेशीर संरक्षण आणि तक्रार प्रक्रिया',
+    landDispute: 'जमीन विवाद',
+    landDisputeDesc: 'मालमत्ता हक्क आणि कायदेशीर प्रक्रिया',
+    consumerProtection: 'ग्राहक संरक्षण',
+    consumerProtectionDesc: 'ग्राहक हक्क आणि तक्रार निवारण',
+    helplineNumbers: 'हेल्पलाइन नंबर',
+    legalServicesAuthority: 'कायदेशीर सेवा प्राधिकरण',
+    consumerComplaint: 'ग्राहक तक्रार',
+    monFri: 'सोम-शुक्र',
+    
+    // Local Services Page
+    localServicesTitle: 'स्थानिक सेवा',
+    localServicesSubtitle: 'तुमच्या जवळचे सेवा प्रदाते',
+    electrician: 'इलेक्ट्रिशियन',
+    plumber: 'प्लंबर',
+    carpenter: 'सुतार',
+    painter: 'पेंटर',
+    acRepair: 'AC दुरुस्ती',
+    km: 'किमी',
+    
+    // Applications Page
+    applicationsTitle: 'माझे अर्ज',
+    applicationsSubtitle: 'अर्जांची स्थिती पहा',
+    total: 'एकूण',
+    approved: 'मंजूर',
+    processing: 'प्रक्रियेत',
+    rejected: 'नाकारला',
+    pending: 'प्रलंबित',
+    approvedMsg: 'अर्ज मंजूर झाला. पुढील हप्ता लवकरच जमा होईल.',
+    processingMsg: 'कागदपत्रांची पडताळणी सुरू आहे.',
+    pendingMsg: 'अर्ज प्राप्त झाला. पुनरावलोकन प्रलंबित.',
+    rejectedMsg: 'पात्रता निकष पूर्ण नाहीत. कृपया पुन्हा अर्ज करा.',
+    
+    // Schemes Page
+    schemesTitle: 'सरकारी योजना',
+    schemesSubtitle: 'तुमच्यासाठी उपलब्ध योजना शोधा',
+    searchSchemes: 'योजना शोधा...',
+    noSchemesFound: 'कोणतीही योजना सापडली नाही',
+    agriculture: 'शेती',
+    pmKisanDesc: 'शेतकऱ्यांना वार्षिक ₹6,000 थेट मदत',
+    mjpjayDesc: 'महात्मा ज्योतिबा फुले जन आरोग्य योजना',
+    sukanyaDesc: 'मुलींच्या शिक्षणासाठी बचत योजना',
+    pmayDesc: 'प्रधानमंत्री आवास योजना - ग्रामीण',
+    ayushmanDesc: '₹5 लाख पर्यंत मोफत उपचार',
+    farmLoanDesc: 'महाराष्ट्र राज्य कर्जमाफी योजना',
+    
+    // Profile Page
+    languagePreference: 'भाषा प्राधान्य',
+    accountSettings: 'खाते सेटिंग्स',
   },
   hi: {
     // Header
@@ -169,6 +369,10 @@ export const translations = {
     newUser: 'नया उपयोगकर्ता?',
     existingUser: 'पहले से खाता है?',
     logout: 'लॉगआउट',
+    registrationSuccess: 'पंजीकरण सफल!',
+    registrationFailed: 'पंजीकरण विफल',
+    loginFailed: 'लॉगिन विफल',
+    failedToSendOtp: 'OTP भेजने में विफल',
     
     // Services
     chatbot: 'चैटबॉट',
@@ -208,11 +412,107 @@ export const translations = {
     loading: 'लोड हो रहा है...',
     error: 'त्रुटि',
     success: 'सफल',
+    all: 'सभी',
+    call: 'कॉल करें',
+    tap: 'टैप करें',
+    available: 'उपलब्ध',
+    busy: 'व्यस्त',
     
     // Validation
     invalidMobile: 'कृपया वैध 10 अंकों का मोबाइल नंबर दर्ज करें',
     passwordMinLength: 'पासवर्ड कम से कम 6 अक्षर का होना चाहिए',
     passwordMismatch: 'पासवर्ड मेल नहीं खाते',
+    
+    // Chatbot Page
+    chatbotTitle: 'AI चैटबॉट',
+    chatbotSubtitle: 'अपने सवालों के जवाब पाएं',
+    chatbotWelcome: 'नमस्ते! मैं आपका AI सहायक हूं। मैं आपको सरकारी योजनाओं, सेवाओं और आवेदन प्रक्रिया के बारे में जानकारी दे सकता हूं। आप क्या जानना चाहते हैं?',
+    chatbotThinking: 'धन्यवाद! मैं आपके प्रश्न पर काम कर रहा हूं। कृपया थोड़ी प्रतीक्षा करें...',
+    typeYourQuestion: 'अपना प्रश्न टाइप करें...',
+    
+    // Voice Assistant Page
+    voiceAssistantTitle: 'वॉइस असिस्टेंट',
+    voiceAssistantSubtitle: 'बोलें और मदद पाएं',
+    listening: 'सुन रहा हूं...',
+    pressToSpeak: 'बोलने के लिए बटन दबाएं',
+    youSaid: 'आपने कहा:',
+    exampleCommands: 'उदाहरण के लिए बोलें:',
+    whatIsPmKisan: 'PM-KISAN योजना क्या है?',
+    findNearbyHospital: 'पास का अस्पताल खोजें',
+    myApplicationStatus: 'मेरे आवेदन की स्थिति',
+    
+    // Emergency Page
+    emergencyTitle: 'आपातकालीन सेवाएं',
+    emergencySubtitle: 'तुरंत मदद के लिए कॉल करें',
+    inEmergency: 'आपातकालीन स्थिति में',
+    stayCalm: 'शांत रहें और उचित नंबर पर कॉल करें',
+    police: 'पुलिस',
+    policeDesc: 'अपराध, चोरी, दुर्घटना',
+    ambulance: 'एम्बुलेंस',
+    ambulanceDesc: 'चिकित्सा आपातकाल',
+    fire: 'अग्निशमन',
+    fireDesc: 'आग, बचाव कार्य',
+    womenHelpline: 'महिला हेल्पलाइन',
+    womenHelplineDesc: 'महिला सुरक्षा',
+    disasterManagement: 'आपदा प्रबंधन',
+    disasterManagementDesc: 'प्राकृतिक आपदाएं',
+    shareLocation: 'कॉल करते समय अपना स्थान बताएं ताकि मदद जल्दी पहुंच सके',
+    
+    // Legal Help Page
+    legalHelpTitle: 'कानूनी सहायता',
+    legalHelpSubtitle: 'अपने अधिकार जानें',
+    laborRights: 'श्रमिक अधिकार',
+    laborRightsDesc: 'वेतन, कार्य समय, छुट्टियां और अन्य अधिकार',
+    womenSafety: 'महिला सुरक्षा',
+    womenSafetyDesc: 'कानूनी सुरक्षा और शिकायत प्रक्रिया',
+    landDispute: 'भूमि विवाद',
+    landDisputeDesc: 'संपत्ति अधिकार और कानूनी प्रक्रिया',
+    consumerProtection: 'उपभोक्ता संरक्षण',
+    consumerProtectionDesc: 'उपभोक्ता अधिकार और शिकायत निवारण',
+    helplineNumbers: 'हेल्पलाइन नंबर',
+    legalServicesAuthority: 'कानूनी सेवा प्राधिकरण',
+    consumerComplaint: 'उपभोक्ता शिकायत',
+    monFri: 'सोम-शुक्र',
+    
+    // Local Services Page
+    localServicesTitle: 'स्थानीय सेवाएं',
+    localServicesSubtitle: 'आपके पास के सेवा प्रदाता',
+    electrician: 'इलेक्ट्रीशियन',
+    plumber: 'प्लंबर',
+    carpenter: 'बढ़ई',
+    painter: 'पेंटर',
+    acRepair: 'AC मरम्मत',
+    km: 'किमी',
+    
+    // Applications Page
+    applicationsTitle: 'मेरे आवेदन',
+    applicationsSubtitle: 'आवेदन की स्थिति देखें',
+    total: 'कुल',
+    approved: 'स्वीकृत',
+    processing: 'प्रक्रियाधीन',
+    rejected: 'अस्वीकृत',
+    pending: 'लंबित',
+    approvedMsg: 'आवेदन स्वीकृत। अगली किस्त जल्द जमा होगी।',
+    processingMsg: 'दस्तावेजों का सत्यापन जारी है।',
+    pendingMsg: 'आवेदन प्राप्त। समीक्षा लंबित।',
+    rejectedMsg: 'पात्रता मानदंड पूरे नहीं। कृपया फिर से आवेदन करें।',
+    
+    // Schemes Page
+    schemesTitle: 'सरकारी योजनाएं',
+    schemesSubtitle: 'आपके लिए उपलब्ध योजनाएं खोजें',
+    searchSchemes: 'योजनाएं खोजें...',
+    noSchemesFound: 'कोई योजना नहीं मिली',
+    agriculture: 'कृषि',
+    pmKisanDesc: 'किसानों को वार्षिक ₹6,000 सीधी सहायता',
+    mjpjayDesc: 'महात्मा ज्योतिबा फुले जन आरोग्य योजना',
+    sukanyaDesc: 'बेटियों की शिक्षा के लिए बचत योजना',
+    pmayDesc: 'प्रधानमंत्री आवास योजना - ग्रामीण',
+    ayushmanDesc: '₹5 लाख तक मुफ्त इलाज',
+    farmLoanDesc: 'महाराष्ट्र राज्य ऋण माफी योजना',
+    
+    // Profile Page
+    languagePreference: 'भाषा प्राथमिकता',
+    accountSettings: 'खाता सेटिंग्स',
   },
 };
 
