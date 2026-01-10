@@ -61,16 +61,12 @@ const AuthPage = () => {
 
       setIsExistingUser(!!exists);
 
-      // Generate OTP (in production, use SMS service)
-      const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
-
-      // Store OTP in database
-      const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes
-      await supabase.from('otp_verifications').insert({
-        mobile_number: mobileNumber,
-        otp_code: otpCode,
-        expires_at: expiresAt.toISOString(),
+      // Create OTP using secure RPC function
+      const { data: otpCode, error } = await supabase.rpc('create_otp', {
+        p_mobile_number: mobileNumber
       });
+
+      if (error) throw error;
 
       toast({
         title: t('success'),
@@ -101,19 +97,13 @@ const AuthPage = () => {
 
     setIsLoading(true);
     try {
-      // Verify OTP
-      const { data: otpRecord } = await supabase
-        .from('otp_verifications')
-        .select('*')
-        .eq('mobile_number', mobileNumber)
-        .eq('otp_code', otp)
-        .eq('verified', false)
-        .gte('expires_at', new Date().toISOString())
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .maybeSingle();
+      // Verify OTP using secure RPC function
+      const { data: isValid, error } = await supabase.rpc('verify_otp', {
+        p_mobile_number: mobileNumber,
+        p_otp_code: otp
+      });
 
-      if (!otpRecord) {
+      if (error || !isValid) {
         toast({
           title: t('error'),
           description: t('invalidOtp'),
@@ -122,12 +112,6 @@ const AuthPage = () => {
         setIsLoading(false);
         return;
       }
-
-      // Mark OTP as verified
-      await supabase
-        .from('otp_verifications')
-        .update({ verified: true })
-        .eq('id', otpRecord.id);
 
       toast({
         title: t('success'),
@@ -201,70 +185,64 @@ const AuthPage = () => {
 
     setIsLoading(true);
     try {
-      // Check if user exists using secure RPC function
-      const { data: mobileExists } = await supabase.rpc('check_mobile_exists', { 
-        mobile: mobileNumber 
+      // Create profile using secure RPC function (validates OTP internally)
+      const { data: profiles, error } = await supabase.rpc('create_profile_with_otp', {
+        p_mobile_number: mobileNumber,
+        p_username: username.trim(),
+        p_password_hash: password, // In production, hash this properly
+        p_preferred_language: localStorage.getItem('preferred_language') || 'mr',
       });
 
-      if (mobileExists) {
-        toast({
-          title: t('error'),
-          description: t('mobileExists'),
-          variant: "destructive",
-        });
-        setStep('mobile');
+      if (error) {
+        if (error.message.includes('OTP verification required')) {
+          toast({
+            title: t('error'),
+            description: t('invalidOtp'),
+            variant: "destructive",
+          });
+          setStep('mobile');
+        } else if (error.message.includes('Mobile number already registered')) {
+          toast({
+            title: t('error'),
+            description: t('mobileExists'),
+            variant: "destructive",
+          });
+          setStep('mobile');
+        } else if (error.message.includes('Username already taken')) {
+          toast({
+            title: t('error'),
+            description: t('usernameExists'),
+            variant: "destructive",
+          });
+        } else {
+          throw error;
+        }
         setIsLoading(false);
         return;
       }
 
-      // Check if username already exists using secure RPC function
-      const { data: usernameExists } = await supabase.rpc('check_username_exists', { 
-        uname: username.trim() 
-      });
-
-      if (usernameExists) {
-        toast({
-          title: t('error'),
-          description: t('usernameExists'),
-          variant: "destructive",
+      if (profiles && profiles.length > 0) {
+        const newProfile = profiles[0];
+        setUser({
+          id: newProfile.id,
+          mobile_number: newProfile.mobile_number,
+          preferred_language: newProfile.preferred_language,
+          username: newProfile.username ?? undefined,
         });
-        setIsLoading(false);
-        return;
+        localStorage.setItem('auth_user', JSON.stringify({
+          id: newProfile.id,
+          mobile_number: newProfile.mobile_number,
+          preferred_language: newProfile.preferred_language,
+          username: newProfile.username,
+        }));
+
+        toast({
+          title: t('success'),
+          description: t('registrationSuccess'),
+        });
+
+        navigate('/');
       }
-
-      // Create new user profile
-      const { data: newProfile, error } = await supabase
-        .from('profiles')
-        .insert({
-          mobile_number: mobileNumber,
-          username: username.trim(),
-          password_hash: password, // In production, hash this properly
-          preferred_language: localStorage.getItem('preferred_language') || 'mr',
-        })
-        .select()
-        .single();
-
-      if (error) throw error;
-
-      setUser({
-        id: newProfile.id,
-        mobile_number: newProfile.mobile_number,
-        preferred_language: newProfile.preferred_language,
-        username: newProfile.username ?? undefined,
-      });
-      localStorage.setItem('auth_user', JSON.stringify({
-        id: newProfile.id,
-        mobile_number: newProfile.mobile_number,
-        preferred_language: newProfile.preferred_language,
-        username: newProfile.username,
-      }));
-
-      toast({
-        title: t('success'),
-        description: t('registrationSuccess'),
-      });
-
-      navigate('/');
     } catch (error) {
       toast({
         title: t('error'),
