@@ -20,6 +20,7 @@ const Header = ({
     <header className="header-gradient px-4 py-6 text-primary-foreground">
       <div className="container mx-auto flex items-center justify-between">
         <div>
+          <p className="text-xs text-primary-foreground/70 font-medium tracking-wide">{t('appName')}</p>
           <h1 className="text-2xl font-bold">{t('welcome')}, {displayName}!</h1>
           <p className="text-primary-foreground/80 text-sm mt-1">{location}</p>
         </div>

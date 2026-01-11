@@ -2,6 +2,10 @@ export type Language = 'en' | 'mr' | 'hi';
 
 export const translations = {
   en: {
+    // App
+    appName: 'Sahayak',
+    appTagline: 'Your Helpful Assistant',
+    
     // Header
     welcome: 'Welcome',
     selectLanguage: 'Select Language',
@@ -178,6 +182,10 @@ export const translations = {
     accountSettings: 'Account Settings',
   },
   mr: {
+    // App
+    appName: 'सहायक',
+    appTagline: 'तुमचा विश्वासार्ह सहाय्यक',
+    
     // Header
     welcome: 'स्वागत आहे',
     selectLanguage: 'भाषा निवडा',
@@ -354,6 +362,10 @@ export const translations = {
     accountSettings: 'खाते सेटिंग्स',
   },
   hi: {
+    // App
+    appName: 'सहायक',
+    appTagline: 'आपका विश्वसनीय सहायक',
+    
     // Header
     welcome: 'स्वागत है',
     selectLanguage: 'भाषा चुनें',
