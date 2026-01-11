@@ -14,7 +14,7 @@ const Header = ({
   const { t } = useLanguage();
   const { user } = useAuth();
   
-  const displayName = userName || user?.mobile_number?.slice(-4) || "User";
+  const displayName = userName || user?.username || user?.mobile_number?.slice(-4) || "User";
 
   return (
     <header className="header-gradient px-4 py-6 text-primary-foreground">
