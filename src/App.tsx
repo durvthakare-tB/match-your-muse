@@ -16,6 +16,7 @@ import LegalHelpPage from "./pages/LegalHelpPage";
 import ApplicationsPage from "./pages/ApplicationsPage";
 import EmergencyPage from "./pages/EmergencyPage";
 import ProfilePage from "./pages/ProfilePage";
+import FloatingEmergencyButton from "./components/FloatingEmergencyButton";
 
 const queryClient = new QueryClient();
 
@@ -42,19 +43,22 @@ const AppRoutes = () => {
   const { isAuthenticated } = useAuth();
 
   return (
-    <Routes>
-      <Route path="/auth" element={isAuthenticated ? <Navigate to="/" replace /> : <AuthPage />} />
-      <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
-      <Route path="/chatbot" element={<ProtectedRoute><ChatbotPage /></ProtectedRoute>} />
-      <Route path="/voice" element={<ProtectedRoute><VoiceAssistantPage /></ProtectedRoute>} />
-      <Route path="/schemes" element={<ProtectedRoute><SchemesPage /></ProtectedRoute>} />
-      <Route path="/services" element={<ProtectedRoute><LocalServicesPage /></ProtectedRoute>} />
-      <Route path="/legal-help" element={<ProtectedRoute><LegalHelpPage /></ProtectedRoute>} />
-      <Route path="/applications" element={<ProtectedRoute><ApplicationsPage /></ProtectedRoute>} />
-      <Route path="/emergency" element={<ProtectedRoute><EmergencyPage /></ProtectedRoute>} />
-      <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <>
+      {isAuthenticated && <FloatingEmergencyButton />}
+      <Routes>
+        <Route path="/auth" element={isAuthenticated ? <Navigate to="/" replace /> : <AuthPage />} />
+        <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
+        <Route path="/chatbot" element={<ProtectedRoute><ChatbotPage /></ProtectedRoute>} />
+        <Route path="/voice" element={<ProtectedRoute><VoiceAssistantPage /></ProtectedRoute>} />
+        <Route path="/schemes" element={<ProtectedRoute><SchemesPage /></ProtectedRoute>} />
+        <Route path="/services" element={<ProtectedRoute><LocalServicesPage /></ProtectedRoute>} />
+        <Route path="/legal-help" element={<ProtectedRoute><LegalHelpPage /></ProtectedRoute>} />
+        <Route path="/applications" element={<ProtectedRoute><ApplicationsPage /></ProtectedRoute>} />
+        <Route path="/emergency" element={<ProtectedRoute><EmergencyPage /></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
   );
 };
 
