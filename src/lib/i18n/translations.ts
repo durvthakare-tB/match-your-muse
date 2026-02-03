@@ -180,6 +180,22 @@ export const translations = {
     // Profile Page
     languagePreference: 'Language Preference',
     accountSettings: 'Account Settings',
+    location: 'Location',
+    aadhaar: 'Aadhaar',
+    email: 'Email',
+    documents: 'Documents',
+    documentsDesc: 'Aadhaar, PAN, Others',
+    changeAddress: 'Change Address',
+    changeAddressDesc: 'Update current address',
+    loggedOut: 'Logged out successfully',
+    
+    // Scheme Titles
+    pmKisan: 'PM-KISAN',
+    mjpjay: 'MJPJAY',
+    sukanyaSamriddhi: 'Sukanya Samriddhi',
+    pmayG: 'PMAY-G',
+    ayushmanBharat: 'Ayushman Bharat',
+    farmLoanWaiver: 'Farm Loan Waiver',
   },
   mr: {
     // App
@@ -360,6 +376,22 @@ export const translations = {
     // Profile Page
     languagePreference: 'भाषा प्राधान्य',
     accountSettings: 'खाते सेटिंग्स',
+    location: 'स्थान',
+    aadhaar: 'आधार',
+    email: 'ईमेल',
+    documents: 'कागदपत्रे',
+    documentsDesc: 'आधार, पॅन, इतर',
+    changeAddress: 'पत्ता बदला',
+    changeAddressDesc: 'सध्याचा पत्ता अपडेट करा',
+    loggedOut: 'यशस्वीरित्या लॉगआउट केले',
+    
+    // Scheme Titles
+    pmKisan: 'PM-KISAN',
+    mjpjay: 'MJPJAY',
+    sukanyaSamriddhi: 'सुकन्या समृद्धी',
+    pmayG: 'PMAY-G',
+    ayushmanBharat: 'आयुष्मान भारत',
+    farmLoanWaiver: 'शेतकरी कर्जमाफी',
   },
   hi: {
     // App
@@ -540,6 +572,22 @@ export const translations = {
     // Profile Page
     languagePreference: 'भाषा प्राथमिकता',
     accountSettings: 'खाता सेटिंग्स',
+    location: 'स्थान',
+    aadhaar: 'आधार',
+    email: 'ईमेल',
+    documents: 'दस्तावेज़',
+    documentsDesc: 'आधार, पैन, अन्य',
+    changeAddress: 'पता बदलें',
+    changeAddressDesc: 'वर्तमान पता अपडेट करें',
+    loggedOut: 'सफलतापूर्वक लॉगआउट',
+    
+    // Scheme Titles
+    pmKisan: 'PM-KISAN',
+    mjpjay: 'MJPJAY',
+    sukanyaSamriddhi: 'सुकन्या समृद्धि',
+    pmayG: 'PMAY-G',
+    ayushmanBharat: 'आयुष्मान भारत',
+    farmLoanWaiver: 'कृषि ऋण माफी',
   },
 };
 

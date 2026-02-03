@@ -13,8 +13,10 @@ const ProfilePage = () => {
   const { user, logout } = useAuth();
   const { toast } = useToast();
 
+  const displayName = user?.username || (user?.mobile_number ? `User ${user.mobile_number.slice(-4)}` : "User");
+  
   const profileData = {
-    name: user?.mobile_number ? `User ${user.mobile_number.slice(-4)}` : "User",
+    name: displayName,
     phone: user?.mobile_number || "+91 XXXXX XXXXX",
     location: "Maharashtra",
     aadhaar: "XXXX XXXX XXXX",
@@ -22,15 +24,15 @@ const ProfilePage = () => {
   };
 
   const menuItems = [
-    { icon: FileText, label: "Documents", sublabel: "Aadhaar, PAN, Others" },
-    { icon: MapPin, label: "Change Address", sublabel: "Update current address" },
+    { icon: FileText, labelKey: "documents" as const, sublabelKey: "documentsDesc" as const },
+    { icon: MapPin, labelKey: "changeAddress" as const, sublabelKey: "changeAddressDesc" as const },
   ];
 
   const handleLogout = async () => {
     await logout();
     toast({
       title: t('success'),
-      description: 'Logged out successfully',
+      description: t('loggedOut'),
     });
     navigate('/auth');
   };
@@ -60,15 +62,15 @@ const ProfilePage = () => {
 
           <div className="space-y-3">
             <div className="flex items-center justify-between py-2 border-b border-border">
-              <span className="text-sm text-muted-foreground">Location</span>
+              <span className="text-sm text-muted-foreground">{t('location')}</span>
               <span className="text-sm font-medium text-foreground">{profileData.location}</span>
             </div>
             <div className="flex items-center justify-between py-2 border-b border-border">
-              <span className="text-sm text-muted-foreground">Aadhaar</span>
+              <span className="text-sm text-muted-foreground">{t('aadhaar')}</span>
               <span className="text-sm font-medium text-foreground">{profileData.aadhaar}</span>
             </div>
             <div className="flex items-center justify-between py-2">
-              <span className="text-sm text-muted-foreground">Email</span>
+              <span className="text-sm text-muted-foreground">{t('email')}</span>
               <span className="text-sm font-medium text-foreground">{profileData.email}</span>
             </div>
           </div>
@@ -93,7 +95,7 @@ const ProfilePage = () => {
         <div className="bg-card rounded-xl card-shadow overflow-hidden mb-6">
           {menuItems.map((item, index) => (
             <button
-              key={item.label}
+              key={item.labelKey}
               className={`w-full flex items-center gap-4 p-4 hover:bg-muted transition-colors text-left ${
                 index !== menuItems.length - 1 ? "border-b border-border" : ""
               }`}
@@ -102,8 +104,8 @@ const ProfilePage = () => {
                 <item.icon className="w-5 h-5 text-muted-foreground" />
               </div>
               <div className="flex-1">
-                <p className="font-medium text-foreground">{item.label}</p>
-                <p className="text-xs text-muted-foreground">{item.sublabel}</p>
+                <p className="font-medium text-foreground">{t(item.labelKey)}</p>
+                <p className="text-xs text-muted-foreground">{t(item.sublabelKey)}</p>
               </div>
               <ChevronRight className="w-5 h-5 text-muted-foreground" />
             </button>

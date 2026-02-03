@@ -84,25 +84,25 @@ const Index = () => {
   const popularSchemes = [
     {
       icon: Home,
-      title: "PM-KISAN",
+      titleKey: "pmKisan" as const,
       category: t('farmer'),
       iconColor: "text-service-blue",
     },
     {
       icon: Heart,
-      title: "MJPJAY",
+      titleKey: "mjpjay" as const,
       category: t('health'),
       iconColor: "text-service-red",
     },
     {
       icon: GraduationCap,
-      title: "सुकन्या समृद्धी",
+      titleKey: "sukanyaSamriddhi" as const,
       category: t('education'),
       iconColor: "text-service-purple",
     },
     {
       icon: Home,
-      title: "PMAY-G",
+      titleKey: "pmayG" as const,
       category: t('housing'),
       iconColor: "text-service-green",
     },
@@ -153,7 +153,7 @@ const Index = () => {
                 <PopularSchemeCard
                   key={index}
                   icon={scheme.icon}
-                  title={scheme.title}
+                  title={t(scheme.titleKey)}
                   category={scheme.category}
                   iconColor={scheme.iconColor}
                   onClick={() => navigate("/schemes")}
