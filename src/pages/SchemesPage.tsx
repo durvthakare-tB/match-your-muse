@@ -20,7 +20,7 @@ const SchemesPage = () => {
   const schemes = [
     {
       id: 1,
-      title: "PM-KISAN",
+      titleKey: "pmKisan" as const,
       descriptionKey: "pmKisanDesc" as const,
       category: "agriculture",
       icon: Tractor,
@@ -29,7 +29,7 @@ const SchemesPage = () => {
     },
     {
       id: 2,
-      title: "MJPJAY",
+      titleKey: "mjpjay" as const,
       descriptionKey: "mjpjayDesc" as const,
       category: "health",
       icon: Heart,
@@ -38,7 +38,7 @@ const SchemesPage = () => {
     },
     {
       id: 3,
-      title: "Sukanya Samriddhi",
+      titleKey: "sukanyaSamriddhi" as const,
       descriptionKey: "sukanyaDesc" as const,
       category: "education",
       icon: GraduationCap,
@@ -47,7 +47,7 @@ const SchemesPage = () => {
     },
     {
       id: 4,
-      title: "PMAY-G",
+      titleKey: "pmayG" as const,
       descriptionKey: "pmayDesc" as const,
       category: "housing",
       icon: Home,
@@ -56,7 +56,7 @@ const SchemesPage = () => {
     },
     {
       id: 5,
-      title: "Ayushman Bharat",
+      titleKey: "ayushmanBharat" as const,
       descriptionKey: "ayushmanDesc" as const,
       category: "health",
       icon: Heart,
@@ -65,7 +65,7 @@ const SchemesPage = () => {
     },
     {
       id: 6,
-      title: "Farm Loan Waiver",
+      titleKey: "farmLoanWaiver" as const,
       descriptionKey: "farmLoanDesc" as const,
       category: "agriculture",
       icon: Tractor,
@@ -75,7 +75,7 @@ const SchemesPage = () => {
   ];
 
   const filteredSchemes = schemes.filter((scheme) => {
-    const matchesSearch = scheme.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    const matchesSearch = t(scheme.titleKey).toLowerCase().includes(searchQuery.toLowerCase()) ||
                           t(scheme.descriptionKey).toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = activeCategory === "all" || scheme.category === activeCategory;
     return matchesSearch && matchesCategory;
@@ -129,7 +129,7 @@ const SchemesPage = () => {
                 <scheme.icon className={`w-6 h-6 ${scheme.iconColor}`} />
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-foreground">{scheme.title}</h3>
+                <h3 className="font-semibold text-foreground">{t(scheme.titleKey)}</h3>
                 <p className="text-sm text-muted-foreground truncate">{t(scheme.descriptionKey)}</p>
               </div>
               <ChevronRight className="w-5 h-5 text-muted-foreground flex-shrink-0" />
