@@ -9,7 +9,7 @@ const LocalServicesPage = () => {
   const services = [
     {
       id: 1,
-      name: "सुनील इलेक्ट्रिकल्स",
+      nameKey: "sunilElectricals" as const,
       categoryKey: "electrician" as const,
       rating: 4.8,
       distance: 0.5,
@@ -18,7 +18,7 @@ const LocalServicesPage = () => {
     },
     {
       id: 2,
-      name: "राजू प्लंबर",
+      nameKey: "rajuPlumber" as const,
       categoryKey: "plumber" as const,
       rating: 4.5,
       distance: 1.2,
@@ -27,7 +27,7 @@ const LocalServicesPage = () => {
     },
     {
       id: 3,
-      name: "पाटील कारपेंटर",
+      nameKey: "patilCarpenter" as const,
       categoryKey: "carpenter" as const,
       rating: 4.7,
       distance: 2.0,
@@ -36,7 +36,7 @@ const LocalServicesPage = () => {
     },
     {
       id: 4,
-      name: "शर्मा पेंटर",
+      nameKey: "sharmaPainter" as const,
       categoryKey: "painter" as const,
       rating: 4.6,
       distance: 1.8,
@@ -45,7 +45,7 @@ const LocalServicesPage = () => {
     },
     {
       id: 5,
-      name: "देशमुख AC सर्विस",
+      nameKey: "deshmukAcService" as const,
       categoryKey: "acRepair" as const,
       rating: 4.9,
       distance: 3.0,
@@ -86,7 +86,7 @@ const LocalServicesPage = () => {
             >
               <div className="flex items-start justify-between mb-3">
                 <div>
-                  <h3 className="font-semibold text-foreground">{service.name}</h3>
+                  <h3 className="font-semibold text-foreground">{t(service.nameKey)}</h3>
                   <p className="text-sm text-muted-foreground">{t(service.categoryKey)}</p>
                 </div>
                 <div className={`px-2 py-1 rounded-full text-xs font-medium ${

@@ -150,6 +150,13 @@ export const translations = {
     painter: 'Painter',
     acRepair: 'AC Repair',
     km: 'km',
+    // Service Provider Names
+    sunilElectricals: 'Sunil Electricals',
+    rajuPlumber: 'Raju Plumber',
+    patilCarpenter: 'Patil Carpenter',
+    sharmaPainter: 'Sharma Painter',
+    deshmukAcService: 'Deshmukh AC Service',
+    rating: 'Rating',
     
     // Applications Page
     applicationsTitle: 'My Applications',
@@ -346,6 +353,13 @@ export const translations = {
     painter: 'पेंटर',
     acRepair: 'AC दुरुस्ती',
     km: 'किमी',
+    // Service Provider Names
+    sunilElectricals: 'सुनील इलेक्ट्रिकल्स',
+    rajuPlumber: 'राजू प्लंबर',
+    patilCarpenter: 'पाटील सुतार',
+    sharmaPainter: 'शर्मा पेंटर',
+    deshmukAcService: 'देशमुख AC सर्विस',
+    rating: 'रेटिंग',
     
     // Applications Page
     applicationsTitle: 'माझे अर्ज',
@@ -542,6 +556,13 @@ export const translations = {
     painter: 'पेंटर',
     acRepair: 'AC मरम्मत',
     km: 'किमी',
+    // Service Provider Names
+    sunilElectricals: 'सुनील इलेक्ट्रिकल्स',
+    rajuPlumber: 'राजू प्लंबर',
+    patilCarpenter: 'पाटिल बढ़ई',
+    sharmaPainter: 'शर्मा पेंटर',
+    deshmukAcService: 'देशमुख AC सर्विस',
+    rating: 'रेटिंग',
     
     // Applications Page
     applicationsTitle: 'मेरे आवेदन',
